@@ -224,5 +224,5 @@ The 2SLS estimate measures the causal effect of an additional year of education 
 
 ## 5.3 External validity
 
-The LATE is not necessarily equal to the average treatment effect (ATE) for the full population. The estimate applies specifically to compliers—individuals whose education decisions are influenced by proximity to a college. These individuals may have different returns to education than the average person. For example, compliers may have higher marginal returns to education if a small reduction in cost was enough to induce them to acquire more schooling. Therefore, the IV estimate may not generalize to everyone in the sample.
+The LATE is not necessarily equal to the average treatment effect (ATE) for the full population because it applies only to compliers, or individuals whose education decisions were affected by proximity to a college. These individuals may have different returns to education than the average person. Compliers may have higher marginal returns to education than the typical person since they were induced to get more schooling when the cost of attending college fell. If proximity mainly affects people who benefit a lot from an additional year of schooling, then the LATE could be larger than the ATE. Thus, the IV estimate may not generalize to the entire sample.
 

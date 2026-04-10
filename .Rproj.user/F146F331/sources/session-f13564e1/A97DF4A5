@@ -3,7 +3,7 @@
     "path": "~/Desktop/gov51-ps4/Gov51-PS4-Yashiro,Mizuki.Rmd",
     "project_path": "Gov51-PS4-Yashiro,Mizuki.Rmd",
     "type": "r_markdown",
-    "hash": "2149013606",
+    "hash": "3702467160",
     "contents": "",
     "dirty": false,
     "created": 1775779894286.0,
@@ -13,15 +13,15 @@
         "tempName": "Untitled1",
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "218,99",
-        "scrollLine": "213"
+        "cursorPosition": "226,608",
+        "scrollLine": "223"
     },
     "folds": "",
-    "lastKnownWriteTime": 1775828841,
+    "lastKnownWriteTime": 1775828969,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1775828841743,
+    "last_content_update": 1775828969816,
     "read_only": false,
     "read_only_alternatives": []
 }
