@@ -1,0 +1,2 @@
+"0","ggplot(card, aes(x = educ)) +"
+"0","  geom_histogram(binwidth = 1)"
