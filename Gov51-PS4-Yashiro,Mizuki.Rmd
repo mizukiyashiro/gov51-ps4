@@ -51,7 +51,7 @@ The scatter plot shows a positive relationship between education and log weekly 
 
 ## 1.5. Why OLS might be misleading
 
-Having years of education does not tell you about the characteristics of the people themselves. People who already have high innate abilities inherently might complete more education. One reason is ability bias. People with higher innate ability may both get more education and earn higher wages, even if education itself does not raise wages. A second reason is family background. People from wealthier or more supportive families may be able to stay in school longer and also have access to better job opportunities later on. Because these factors affect both education and wages, the OLS estimate may overstate the causal effect of education.
+Having years of education does not tell you about the characteristics of the people themselves. People who already have high innate abilities inherently might complete more education. One reason is ability bias. People with higher innate ability may both get more education and earn higher wages, even if education itself does not raise wages. A second reason is family background. People from wealthier or more supportive families may be able to stay in school longer and also have access to better job opportunities later on. Because these factors affect both education and wages, the OLS estimate may overstate the true causal effect of education.
 
 # 2. The Instrument: College Proximity
 
@@ -90,9 +90,9 @@ The t-statistic on nearc4 is 4.0607, so the first-stage F-statistic is 16.489284
 
 ## 2.4
 
-(A) The exclusion restriction requires that, after controlling for education and the other covariates, growing up near a 4-year college affects log wages only through its effect on education and not through any other channel. Being clsoe to colelge is the IV.
+(A) The exclusion restriction requires that, conditional on education and the other control variables, growing up near a 4-year college ('nearc4') has no direct effect on log weekly wages. That is, once controlling for education, nearc4 should affect wages only through its impact on educational attainment and not through any other channel.
 
-(B) One possible violation is that people who grew up near a college may also have grown up in places with stronger local labor markets, better public schools, or more urban economic opportunities. In that case, nearc4 could affect wages directly, not only through schooling, which would violate the exclusion restriction. beiong in proximity to college === more educational opportuntiies
+(B) One possible violation of the exclusion restriction is that individuals who grew up near a college may also have grown up in areas with stronger labor markets, better public schools, or more urban economic opportunities. Because colleges are often located in metropolitan areas, proximity may be correlated with factors that directly influence wages. In this case, 'nearc4' could affect wages through channels other than education, violating the exclusion restriction.
 
 ## 2.5 Balance check
 
@@ -121,7 +121,9 @@ reduced_form <- lm_robust(
 summary(reduced_form)
 ```
 
-The coefficient on nearc4 is 0.040854, with a SE = 0.0160993, and t = 2.538. This means that growing up near a 4-year college is associated with an increase of 0.040854 higher log weekly wages than those who did not, holding other factors constant. Because the dependent variable is in logs, this corresponds to approximately a 100 x 0.040854% increase in wages. This estimate is the reduced-form effect of the instrument on wages, combining both the effect of proximity on education and the effect of education on wages. In other words, it reflects the overall relationship between growing up near a college and earnings, without yet isolating the causal effect of education itself.
+The reduced-form coefficient on nearc4 is 0.040854 (SE = 0.0160993, t = 2.538). This means that individuals who grew up near a 4-year college have, on average, 0.040854 higher log weekly wages than those who did not, holding other factors constant. Because the dependent variable is in logs, this corresponds to approximately a 100 x 0.040854 = 4.0854% increase in wages.
+
+This estimate is the reduced-form effect of the instrument on wages, combining both the effect of proximity on education and the effect of education on wages. In other words, it reflects the overall relationship between growing up near a college and earnings, without yet isolating the causal effect of education itself.
 
 ## 3.2 Calculate the Wald estimator by hand
 
@@ -137,7 +139,7 @@ The Wald estimator by hand is 0.1248938.
 
 ## 3.3 Interpret the Wald estimator
 
-The Wald estimate implies that for individuals whose education was affected by growing up near a 4-year college, one additional year of education increases log weekly wages by 0.1248938. This corresponds to approximately a 100 x 0.1248938% increase in wages.
+The Wald estimate implies that for individuals whose education was affected by growing up near a 4-year college, one additional year of education increases log weekly wages by 0.1248938. This corresponds to approximately a 100 x 0.1248938 = 12.48938% increase in wages.
 
 # 4. OLS vs. 2SLS
 
@@ -184,7 +186,7 @@ modelsummary(
 
 (B) One reason OLS may underestimate the return to education is measurement error in education, which biases OLS estimates toward zero. Another reason is that the IV estimate captures the return for compliers. These are individuals whose education increased due to proximity to a college, and thus may have higher marginal returns to education than the average person. These factors can lead the 2SLS estimate to exceed the OLS estimate.
 
-(C) The 2SLS estimate is more credible as a causal estimate because it uses exogenous variation in education induced by proximity to a college. This helps isolate the effect of education from confounding factors such as ability or family background, which may bias the OLS estimate.
+(C) The 2SLS estimate is more credible as a causal estimate because it uses exogenous variation in education induced by proximity to a college. This helps to isolate the effect of education from confounding factors such as ability or family background, which may bias the OLS estimate.
 
 ## 4.5 Adding IQ as a control
 
@@ -206,23 +208,22 @@ iv_iq <- iv_robust(
 summary(iv_iq)
 ```
 
-(A) When IQ is added as a control, the OLS coefficient on education decreases from 0.071498 to 0.06757. This means that part of the positive relationship between education and wages in the OLS regression was driven by omitted ability bias, since IQ is positively correlated with both education and wages.
+(A) When IQ is added as a control, the OLS coefficient on education decreases from 0.071498 to 0.06757. IQ absorbs some of the education bias. This means that part of the positive relationship between education and wages in the OLS regression was driven by omitted ability bias, since IQ is positively correlated with both education and wages. 
 
-(B) When IQ is added, the 2SLS estimate decreases from 0.124893 to 0.1093899. This represents a modest change relative to the OLS case.
+(B) When IQ is added, the 2SLS estimate decreases from 0.124893 to 0.1093899. This represents a modest change relative to OLS.
 
-(C) The comparison suggests that omitted ability bias plays a larger role in OLS than in 2SLS. Including IQ reduces the OLS estimate noticeably, indicating that ability was confounding the relationship between education and wages. In contrast, the 2SLS estimate changes less when IQ is added, suggesting that the instrumental variable approach already accounts for unobserved ability to a greater extent.
+(C) The comparison suggested that omitted ability bias plays a larger role in OLS than in 2SLS. Including IQ reduces the OLS estimate noticeably. This indicates that ability was confounding the relationship between education and wages. On the other hand, the 2SLS estimate changes less when IQ is added, meaning that the instrumental variable approach already accounts for unobserved ability to a greater extent.
 
 # 5. Interpretation and LATE
 
 ## 5.1 Who are the compliers?
 
-The compliers are individuals whose educational attainment increased because they grew up near a 4-year college. In concrete terms, these are people who were on the margin of attending college or staying in school longer, and who ended up getting more education because living near a college reduced the financial or logistical barriers to attendance.
+The compliers are individuals whose educational attainment increased because they grew up near a 4-year college, who would not have obtained as much education had they lived farther away. In other words, these are people who were on the margin of attending college, and who ended up getting more education because living near a college reduced the financial/ logistical barriers to attendance.
 
 ## 5.2 Write the LATE interpretation
 
-The 2SLS estimate measures the causal effect of an additional year of education on log weekly wages for individuals whose schooling increased because they grew up near a 4-year college, using geographic variation in college proximity as the source of exogenous variation.
+The 2SLS estimate measures the causal effect of an additional year of education on log weekly wages, on average, for individuals whose schooling increased because they grew up near a 4-year college, using variation in college proximity as the source of exogenous variation.
 
 ## 5.3 External validity
 
-The LATE is not necessarily equal to the average treatment effect (ATE) for the full population because it applies only to compliers, or individuals whose education decisions were affected by proximity to a college. These individuals may have different returns to education than the average person. Compliers may have higher marginal returns to education than the typical person since they were induced to get more schooling when the cost of attending college fell. If proximity mainly affects people who benefit a lot from an additional year of schooling, then the LATE could be larger than the ATE. Thus, the IV estimate may not generalize to the entire sample.
-
+The LATE is not necessarily equal to ATE for the full population because it applies only to compliers, individuals whose education decisions were affected by proximity to a college. These individuals may have different returns to education than the average person. Compliers may have higher marginal returns to education than the typical person, since they were induced to obtain more schooling when the cost of attending college fell. If proximity primarily affects individuals who benefit more from additional education, then the LATE could be larger than the ATE. Thus, the IV estimate may not generalize to the entire sample.
